@@ -1,0 +1,102 @@
+package vms
+
+import (
+    vm    "homelab.local/homelab-cue/schema/vm"
+    env   "homelab.local/homelab-cue/env/lab"
+
+    server "homelab.local/homelab-cue/schema/roles/server"
+    // database "homelab.local/homelab-cue/schema/roles/database"
+    // vault    "homelab.local/homelab-cue/schema/roles/vault"
+    // devtools "homelab.local/homelab-cue/schema/roles/devtools"
+    // gitlab   "homelab.local/homelab-cue/schema/roles/gitlab"
+    // security "homelab.local/homelab-cue/schema/roles/security"
+    // storage  "homelab.local/homelab-cue/schema/roles/storage"
+)
+
+vm_template: vm.#VM(env) & {
+    ////////////////////////////////////////////////////////////////////////////
+    // Identity
+    ////////////////////////////////////////////////////////////////////////////
+
+    name:        "vm-template"
+    description: "Replace with VM description"
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Roles
+    ////////////////////////////////////////////////////////////////////////////
+
+    roles: [
+        server.#RoleServer,
+        // database.#RoleDatabasePostgres,
+        // vault.#RoleVaultClient,
+        // devtools.#RoleDevTools,
+        // gitlab.#RoleGitLab,
+        // security.#RoleSecurityStack,
+        // storage.#RoleCephStorage,
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Node placement (inherits from environment unless overridden)
+    ////////////////////////////////////////////////////////////////////////////
+
+    node: env.vm_defaults.node
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Resources
+    ////////////////////////////////////////////////////////////////////////////
+
+    resources: {
+        cpu:    2
+        memory: 4096
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Disks (storage inherits from environment)
+    ////////////////////////////////////////////////////////////////////////////
+
+    disks: [
+        {
+            name: "root"
+            size: "20G"
+            ...
+        }
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Networking (environment defaults for VLAN + SDN zone)
+    ////////////////////////////////////////////////////////////////////////////
+
+    nics: [
+        {
+            bridge:   "vmbr0"
+            vlan:     env.vm_defaults.vlan
+            sdn_zone: env.vm_defaults.sdn_zone
+            ip:       "auto"
+            ...
+        }
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////
+    // OS + Cloud-init
+    ////////////////////////////////////////////////////////////////////////////
+
+    os: {
+        image:         "tpl-uefi-deb13"
+        ssh_user:      "jim"
+
+        // intent-only principal (no secrets here), inherited from role, can be overridden.
+        ssh_principal: server.ssh_principal
+        ...
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Vault integration
+    ////////////////////////////////////////////////////////////////////////////
+
+    vault: {
+        approle: "auto"
+        ...
+    }
+
+    ...
+}
