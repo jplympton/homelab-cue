@@ -1,12 +1,18 @@
-package vm
+package role
+
+import (
+	diskSchema "homelab.local/homelab-cue/schema/disk"
+	nicSchema  "homelab.local/homelab-cue/schema/nic"
+)
 
 #Role: {
     env: _
 
     name?: string
 
-    extra_disks?: [...(#Disk & { env: env })]
-    extra_nics?:  [...(#NIC  & { env: env })]
+    // Roles can request extra infrastructure, using shared base types
+    extra_disks?: [...(diskSchema.#Disk & { env: env })]
+    extra_nics?:  [...(nicSchema.#NIC  & { env: env })]
 
     vault?: {
         templates?:  [...string]
