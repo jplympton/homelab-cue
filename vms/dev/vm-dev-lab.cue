@@ -2,20 +2,20 @@ package vms
 
 import (
 	vm "homelab.local/homelab-cue/schema/vm"
-	env "homelab.local/homelab-cue/env/lab"
+	env "homelab.local/homelab-cue/env/dev"
 
 	server "homelab.local/homelab-cue/schema/roles/server"
-	netbox "homelab.local/homelab-cue/schema/roles/netbox"
+	devtools "homelab.local/homelab-cue/schema/roles/devtools"
 	vault "homelab.local/homelab-cue/schema/roles/vault"
 )
 
-vm_netbox: vm.#VM(env) & {
-	name:        "vm-netbox"
-	description: "NetBox IPAM/DCIM server"
+vm_dev_lab: vm.#VM(env) & {
+	name:        "vm-dev-lab"
+	description: "Development and lab tools VM"
 
 	roles: [
 		server.#RoleServer,
-		netbox.#RoleNetbox,
+		devtools.#RoleDevTools,
 		vault.#RoleVaultClient,
 	]
 
@@ -30,11 +30,6 @@ vm_netbox: vm.#VM(env) & {
 		{
 			name: "root"
 			size: "40G"
-			...
-		},
-		{
-			name: "data"
-			size: "50G"
 			...
 		},
 	]

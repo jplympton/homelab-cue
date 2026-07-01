@@ -1,4 +1,4 @@
-Orchestrator Layer
+# Orchestrator Layer
 The orchestrator is the middle layer of the Homelab IaC pipeline. It sits between:
 selector → orchestrator → transform
 Its purpose is to construct the canonical VM IR (Intermediate Representation) by combining:
@@ -8,6 +8,7 @@ Its purpose is to construct the canonical VM IR (Intermediate Representation) by
 The orchestrator does not perform any provider-specific logic. It produces a normalized IR and hands it to the transform layer.
 
 Responsibilities
+
 1. Load VM Intent
 The orchestrator selects a VM definition from:
 vms/<env>/<vm>.cue

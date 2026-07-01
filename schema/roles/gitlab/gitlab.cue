@@ -1,44 +1,44 @@
 package gitlab
 
 #RoleGitLab: {
-    name: "gitlab"
+	name: "gitlab"
 
-    // Principal for GitLab server secrets (Rails, SMTP, OAuth, registry, etc.)
-    gitlab_principal?: string | *"gitlab"
+	// Principal for GitLab server secrets (Rails, SMTP, OAuth, registry, etc.)
+	gitlab_principal?: string | *"gitlab"
 
-    services?: {
-        docker_compose?: null
-        systemd_units?: []
-        ...
-    }
+	services?: {
+		docker_compose?: null
+		systemd_units?: []
+		...
+	}
 
-    app?: {
-        gitlab: {
-            enabled?: true
-            http_port?: 8080
-            ssh_port?: 2222
-            data_dir?: "/var/opt/gitlab"
-            ...
-        }
-        ...
-    }
+	app?: {
+		gitlab: {
+			enabled?:   true
+			http_port?: 8080
+			ssh_port?:  2222
+			data_dir?:  "/var/opt/gitlab"
+			...
+		}
+		...
+	}
 
-    monitoring?: {
-        exporters?: []
-        ...
-    }
+	monitoring?: {
+		exporters?: []
+		...
+	}
 
-    vault?: {
-        templates?: []
-        token_sink?: string
-        ...
-    }
+	vault?: {
+		templates?: []
+		token_sink?: string
+		...
+	}
 
-    ...
+	...
 }
 
 #Transform: {
-    vm: _
-    context: _
-    out: _
+	vm:      _
+	context: _
+	out:     _
 }

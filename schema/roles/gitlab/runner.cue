@@ -1,37 +1,37 @@
 package gitlab
 
 #RoleGitLabRunner: {
-    name: "gitlab-runner"
+	name: "gitlab-runner"
 
-    // Principal for runner registration tokens
-    runner_principal?: string | *"gitlab-runner"
+	// Principal for runner registration tokens
+	runner_principal?: string | *"gitlab-runner"
 
-    services?: {
-        docker_compose?: null
-        systemd_units?: []
-        ...
-    }
+	services?: {
+		docker_compose?: null
+		systemd_units?: []
+		...
+	}
 
-    app?: {
-        gitlab_runner: {
-            enabled?: true
-            concurrent?: 4
-            executor?: "docker"
-            ...
-        }
-        ...
-    }
+	app?: {
+		gitlab_runner: {
+			enabled?:    true
+			concurrent?: 4
+			executor?:   "docker"
+			...
+		}
+		...
+	}
 
-    monitoring?: {
-        exporters?: []
-        ...
-    }
+	monitoring?: {
+		exporters?: []
+		...
+	}
 
-    ...
+	...
 }
 
 #Transform: {
-    vm: _
-    context: _
-    out: _
+	vm:      _
+	context: _
+	out:     _
 }

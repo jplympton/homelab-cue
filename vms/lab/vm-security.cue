@@ -1,62 +1,62 @@
 package vms
 
 import (
-    vm        "homelab.local/homelab-cue/schema/vm"
-    env       "homelab.local/homelab-cue/env/lab"
+	vm "homelab.local/homelab-cue/schema/vm"
+	env "homelab.local/homelab-cue/env/lab"
 
-    server    "homelab.local/homelab-cue/schema/roles/server"
-    security  "homelab.local/homelab-cue/schema/roles/security"
-    vault     "homelab.local/homelab-cue/schema/roles/vault"
+	server "homelab.local/homelab-cue/schema/roles/server"
+	security "homelab.local/homelab-cue/schema/roles/security"
+	vault "homelab.local/homelab-cue/schema/roles/vault"
 )
 
 vm_security: vm.#VM(env) & {
-    name:        "vm-security"
-    description: "Security monitoring and analysis VM"
+	name:        "vm-security"
+	description: "Security monitoring and analysis VM"
 
-    roles: [
-        server.#RoleServer,
-        security.#RoleSecurityStack,
-        vault.#RoleVaultClient,
-    ]
+	roles: [
+		server.#RoleServer,
+		security.#RoleSecurityStack,
+		vault.#RoleVaultClient,
+	]
 
-    node: env.vm_defaults.node
+	node: env.vm_defaults.node
 
-    resources: {
-        cpu:    4
-        memory: 8192
-    }
+	resources: {
+		cpu:    4
+		memory: 8192
+	}
 
-    disks: [
-        {
-            name: "root"
-            size: "40G"
-            ...
-        }
-    ]
+	disks: [
+		{
+			name: "root"
+			size: "40G"
+			...
+		},
+	]
 
-    nics: [
-        {
-            bridge:   "vmbr0"
-            vlan:     env.vm_defaults.vlan
-            sdn_zone: env.vm_defaults.sdn_zone
-            ip:       "auto"
-            ...
-        }
-    ]
+	nics: [
+		{
+			bridge:   "vmbr0"
+			vlan:     env.vm_defaults.vlan
+			sdn_zone: env.vm_defaults.sdn_zone
+			ip:       "auto"
+			...
+		},
+	]
 
-    os: {
-        image:         "tpl-uefi-deb13"
-        ssh_user:      "jim"
+	os: {
+		image:    "tpl-uefi-deb13"
+		ssh_user: "jim"
 
-        // intent-only principal (no secrets here), inherited from role, can be overridden.
-        ssh_principal: server.ssh_principal
-        ...
-    }
+		// intent-only principal (no secrets here), inherited from role, can be overridden.
+		ssh_principal: server.ssh_principal
+		...
+	}
 
-    vault: {
-        approle: "auto"
-        ...
-    }
+	vault: {
+		approle: "auto"
+		...
+	}
 
-    ...
+	...
 }

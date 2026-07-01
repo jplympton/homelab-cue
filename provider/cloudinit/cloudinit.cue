@@ -1,6 +1,6 @@
 package cloudinit
 
 #Transform: {
-    vm: _
-    out: {}
+	vm: _
+	out: {}
 }

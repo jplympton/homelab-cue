@@ -1,20 +1,20 @@
 package homelab_iac
 
 import (
-    selectorPkg   "homelab.local/homelab-cue/env/selector"
-    secretsSchema "homelab.local/homelab-cue/schema/secrets"
+	selectorPkg "homelab.local/homelab-cue/env/selector"
+	secretsSchema "homelab.local/homelab-cue/schema/secrets"
 )
 
 // Parameters with defaults; override via -t cluster=... -t env=...
 parameter: {
-    cluster: *"CLU-1" | string @tag(cluster)
-    env:     *"lab"   | string @tag(env)
+	cluster: *"CLU-1" | string @tag(cluster)
+	env:     *"lab" | string   @tag(env)
 }
 
 // Selector instance
 selector: selectorPkg & {
-    cluster: parameter.cluster
-    env:     parameter.env
+	cluster: parameter.cluster
+	env:     parameter.env
 }
 
 // Unified environment
@@ -28,7 +28,7 @@ secrets: secretsSchema.#Secrets & environment.SECRETS
 #exported_secrets:     secrets
 
 test_output: {
-    selected_cluster: parameter.cluster
-    selected_env:     parameter.env
-    env_obj:          environment
+	selected_cluster: parameter.cluster
+	selected_env:     parameter.env
+	env_obj:          environment
 }

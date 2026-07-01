@@ -1,42 +1,42 @@
 package security
 
 #RoleSecurityStack: {
-    name: "security-stack"
+	name: "security-stack"
 
-    security_principal?: string | *"security-stack"
+	security_principal?: string | *"security-stack"
 
-    services?: {
-        docker_compose?: null
-        systemd_units?: []
-        ...
-    }
+	services?: {
+		docker_compose?: null
+		systemd_units?: []
+		...
+	}
 
-    app?: {
-        security_stack: {
-            enabled?: true
-            vault_enabled?: true
-            pki_enabled?: true
-            ...
-        }
-        ...
-    }
+	app?: {
+		security_stack: {
+			enabled?:       true
+			vault_enabled?: true
+			pki_enabled?:   true
+			...
+		}
+		...
+	}
 
-    monitoring?: {
-        exporters?: []
-        ...
-    }
+	monitoring?: {
+		exporters?: []
+		...
+	}
 
-    vault?: {
-        templates?: []
-        token_sink?: string
-        ...
-    }
+	vault?: {
+		templates?: []
+		token_sink?: string
+		...
+	}
 
-    ...
+	...
 }
 
 #Transform: {
-    vm: _
-    context: _
-    out: _
+	vm:      _
+	context: _
+	out:     _
 }

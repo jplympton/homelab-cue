@@ -1,6 +1,6 @@
 package proxmox
 
 #Transform: {
-    vm: _
-    out: {}
+	vm: _
+	out: {}
 }

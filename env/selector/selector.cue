@@ -1,11 +1,11 @@
 package selector
 
 import (
-    platformClusters "homelab.local/homelab-cue/platform"
-    platformSchema   "homelab.local/homelab-cue/schema/platform"
-    envSchema        "homelab.local/homelab-cue/schema/environment"
+	platformClusters "homelab.local/homelab-cue/platform"
+	platformSchema "homelab.local/homelab-cue/schema/platform"
+	envSchema "homelab.local/homelab-cue/schema/environment"
 
-    envs "homelab.local/homelab-cue/env"
+	envs "homelab.local/homelab-cue/env"
 )
 
 // Defaults
@@ -17,16 +17,16 @@ env:     string | *"lab"
 
 // Dynamically collect all environments
 environments: {
-    for k, v in envs {
-        "\(k)": v.env
-    }
+	for k, v in envs {
+		"\(k)": v.env
+	}
 }
 
 // Dynamically collect all secrets
 secrets: {
-    for k, v in envs {
-        "\(k)": v.secrets
-    }
+	for k, v in envs {
+		"\(k)": v.secrets
+	}
 }
 
 // Selected env + secrets
@@ -44,6 +44,6 @@ platform_effective: base_platform & platform_overrides
 
 // Final environment context
 result: env_value & {
-    platform: platform_effective
-    SECRETS:  secrets_value
+	platform: platform_effective
+	SECRETS:  secrets_value
 }
